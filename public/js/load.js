@@ -1,4 +1,3 @@
-//добавление новинок
 let offset = 0;
 let limit = 6;
 function loadProducts() {
@@ -55,7 +54,6 @@ document.getElementById('show-more')
     .addEventListener('click', loadProducts);
 loadProducts();
 
-//добавление популярных товаров и магазинов
 let popularOffset = 0;
 let popularLimit = 4;
 

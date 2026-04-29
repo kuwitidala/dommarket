@@ -29,7 +29,7 @@ class HomeController extends Controller
         $limit = $request->limit ?? 4;
 
         $products = \App\Models\Product::with('shop')
-            ->orderBy('rating', 'desc') // 🔥 популярные сверху
+            ->orderBy('rating', 'desc')
             ->skip($offset)
             ->take($limit)
             ->get();

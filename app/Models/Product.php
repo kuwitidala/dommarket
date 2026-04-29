@@ -9,7 +9,6 @@ class Product extends Model
 {
     use HasFactory;
 
-    // Разрешаем массовое заполнение этих полей
     protected $fillable = [
         'name',
         'price',
@@ -22,13 +21,11 @@ class Product extends Model
         'description'
     ];
 
-    // Связь с категорией
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    // Связь с магазином
     public function shop()
     {
         return $this->belongsTo(Shop::class);

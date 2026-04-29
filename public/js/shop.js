@@ -50,7 +50,6 @@ function shopLoadProducts() {
 
             shopLimit = 12;
 
-            // если закончились товары
             if (data.length === 0) {
                 const btn = document.getElementById('shop-show-more');
                 if (btn) btn.style.display = 'none';

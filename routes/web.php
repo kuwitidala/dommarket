@@ -4,6 +4,16 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ReviewController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
@@ -15,15 +25,14 @@ Route::get('/load-popular-products', [HomeController::class, 'loadPopular']);
 Route::get('/load-popular-shops', [HomeController::class, 'loadPopularShops']);
 
 
-use App\Http\Controllers\ProductController;
-
+//продукт
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
-use App\Http\Controllers\ReviewController;
+
+//отзывы
 Route::post('/product/{id}/review', [ReviewController::class, 'store'])->middleware('auth');
 
-use App\Http\Controllers\ProfileController;
-
+//профиль
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profile/{id}', [ProfileController::class, 'update'])->name('user.update');
@@ -39,13 +48,12 @@ Route::get('/new', function () {
 Route::get('/order', function () {
     return view('order');
 });
-use App\Http\Controllers\Auth\RegisterController;
 
+//регистрация
 Route::get('/regist', [RegisterController::class, 'show'])->name('regist.show');
 Route::post('/regist', [RegisterController::class, 'store'])->name('regist.store');
 
-use App\Http\Controllers\ShopController;
-
+//магазин
 Route::middleware('auth')->group(function () {
     Route::get('/shop/create', [ShopController::class, 'create'])->name('shop.create');
     Route::post('/shop', [ShopController::class, 'store'])->name('shop.store');
@@ -54,15 +62,13 @@ Route::post('/shop/update', [ShopController::class, 'update'])->name('shop.updat
 Route::get('/shop/{id}', [ShopController::class, 'show'])->name('shop.show');
 Route::get('/load-shop-products', [ShopController::class, 'loadProducts']);
 
-use App\Http\Controllers\Auth\LoginController;
-
+//авторизация
 Route::get('/auth', [LoginController::class, 'show'])->name('auth.show');
 Route::post('auth', [LoginController::class, 'store'])->name('auth.store');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
-use App\Http\Controllers\FeedbackController;
-
+//фидбэк
 Route::get('/feedback', [FeedbackController::class, 'showForm'])->name('feedback.show');
 Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
 
@@ -78,14 +84,14 @@ Route::middleware('auth')->group(function () {
     Route::put('/shop/product/{id}', [ProductController::class, 'update'])->name('product.update');
 
 });
-use App\Http\Controllers\OrderController;
+
+//заказ
 Route::middleware('auth')->group(function () {
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/order', [OrderController::class, 'index'])->name('orders.index');
 });
 
-use App\Http\Controllers\CartController;
-
+//корзинв
 Route::middleware('auth')->group(function() {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
@@ -93,8 +99,7 @@ Route::middleware('auth')->group(function() {
     Route::delete('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove');
 });
 
-use App\Http\Controllers\AdminController;
-
+//админка
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 });
